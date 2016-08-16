@@ -4,14 +4,11 @@ export default function count(client, chai, utils) {
     chai.Assertion.addMethod('count', function(expected) {
         const selector =  utils.flag(this, 'object');
         const negate = utils.flag(this, 'negate');
-        let notFound = false;
 
         try {
             elementExists(client, selector);
         } catch (error) {
-            if(negate) {
-                notFound = true
-            } else {
+            if(!negate) {
                 throw error;
             }
         }

@@ -3,7 +3,6 @@ import elementExists from '../util/element-exists';
 export default function text(client, chai, utils) {
     chai.Assertion.addMethod('text', function(expected) {
         const selector =  utils.flag(this, 'object');
-        const negate = utils.flag(this, 'negate');
 
         elementExists(client, selector);
 
