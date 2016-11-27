@@ -1,6 +1,6 @@
 # chai-webdriverio
 
-Provides [webdriverio(https://npmjs.org/package/webdriverio) sugar for the [Chai](http://chaijs.com/) assertion library. Allows you to create expressive integration tests:
+Provides [webdriverio](https://npmjs.org/package/webdriverio) sugar for the [Chai](http://chaijs.com/) assertion library. Allows you to create expressive integration tests:
 
 ```javascript
 expect('.frequency-field').to.have.text('One time')
