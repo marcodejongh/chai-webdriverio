@@ -16,7 +16,6 @@
   "scripts": {
     "transpile": "node_modules/.bin/babel src -d build",
     "transpile-watch": "node_modules/.bin/babel src -d build -w",
-    "postinstall": "echo 'POSTINSTALL DIR:' && pwd && ls . && babel src -d build",
     "test": "mocha \"test/**/*.js\" --compilers js:babel-core/register",
     "test-watch": "npm run test -- --watch"
   },
