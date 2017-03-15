@@ -59,4 +59,4 @@ yarn test             # build and run the specs
 Apache 2.0
 
 ## Thanks
-Thanks to [goodeggs](https://github.com/goodeggs/) for creating: [chai-webdriver](https://github.com/marcodejongh/chai-webdriverio) which inspired this module.
+Thanks to [goodeggs](https://github.com/goodeggs/) for creating: [chai-webdriver](https://github.com/goodeggs/chai-webdriver) which inspired this module.
