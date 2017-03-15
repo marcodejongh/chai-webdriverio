@@ -36,7 +36,7 @@ Setup is pretty easy. Just:
 
 ```javascript
 var chai = require('chai');
-var chaiWebdriver = require('chai-webdriverio');
+var chaiWebdriver = require('chai-webdriverio').default;
 chai.use(chaiWebdriver(browser));
 
 // And you're good to go!
@@ -49,9 +49,9 @@ chai.expect('#site-container h1.heading').to.not.contain.text("I'm a kitty!");
 so easy.
 
 ```bash
-npm install           # download the neccesary development dependencies
-npm run transpile     # compile ES6 into javascript
-npm test              # build and run the specs
+yarn                  # download the neccesary development dependencies
+yarn transpile        # compile ES6 into javascript
+yarn test             # build and run the specs
 ```
 
 ## License

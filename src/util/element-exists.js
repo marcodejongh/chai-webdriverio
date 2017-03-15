@@ -1,6 +1,6 @@
-export default function assertElementExists(client, selector) {
+export default function assertElementExists(client, selector, reverse) {
     try {
-        client.waitForExist(selector);
+        client.waitForExist(selector, reverse);
     } catch (error) {
         throw new Error(`Could not find element with selector ${selector}`);
     }
