@@ -4,7 +4,7 @@
   "description": "Chai assertions for use with webdriverio",
   "license": "Apache-2.0",
   "repository": "marcodejongh/chai-webdriverio",
-  "main": "build/index.js",
+  "main": "dist/index.js",
   "author": {
     "name": "Marco De Jongh",
     "email": "mdejongh@atlassian.com",
@@ -14,23 +14,24 @@
     "node": ">=4"
   },
   "scripts": {
-    "transpile": "node_modules/.bin/babel src -d build",
-    "transpile-watch": "node_modules/.bin/babel src -d build -w",
-    "postinstall": "yarn transpile",
+    "prepublish": "yarn transpile",
+    "transpile": "node_modules/.bin/babel src -d dist",
+    "transpile-watch": "node_modules/.bin/babel src -d dist -w",
     "test": "mocha \"test/**/*.js\" --compilers js:babel-core/register",
     "test-watch": "yarn test -- --watch"
   },
   "keywords": [
-    ""
+    "webdriverio",
+    "webdriver",
+    "chai",
+    "chai matchers",
+    "assertion helpers"
   ],
-  "dependencies": {
+  "devDependencies": {
     "babel-cli": "6.5.1",
     "babel-core": "6.5.1",
     "babel-plugin-transform-object-rest-spread": "6.6.5",
-    "babel-preset-es2015": "6.1.18"
-  },
-  "devDependencies": {
-    "chai": "3.5.0",
+    "babel-preset-es2015": "6.1.18",
     "eslint": "3.3.1",
     "eslint-config-airbnb": "2.1.1",
     "mocha": "3.0.2",
@@ -38,5 +39,8 @@
     "sinon": "1.17.5",
     "sinon-chai": "2.8.0",
     "webdriverio": "4.2.5"
+  },
+  "peerDependencies": {
+    "chai": "3.5.0"
   }
 }
