@@ -1,4 +1,4 @@
-# chai-webdriverio
+# chai-webdriverio ![https://travis-ci.org/marcodejongh/chai-webdriverio.svg?branch=master](https://travis-ci.org/marcodejongh/chai-webdriverio.svg?branch=master)
 
 Provides [webdriverio](https://npmjs.org/package/webdriverio) sugar for the [Chai](http://chaijs.com/) assertion library. Allows you to create expressive integration tests:
 
