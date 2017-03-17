@@ -14,7 +14,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "prepublish": "npm transpile",
+    "prepublish": "npm run transpile",
     "transpile": "node_modules/.bin/babel src -d dist",
     "transpile-watch": "node_modules/.bin/babel src -d dist -w",
     "test": "mocha \"test/**/*.js\" --compilers js:babel-core/register",
