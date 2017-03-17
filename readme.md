@@ -49,9 +49,9 @@ chai.expect('#site-container h1.heading').to.not.contain.text("I'm a kitty!");
 so easy.
 
 ```bash
-yarn                  # download the neccesary development dependencies
-yarn transpile        # compile ES6 into javascript
-yarn test             # build and run the specs
+npm                  # download the neccesary development dependencies
+npm transpile        # compile ES6 into javascript
+npm test             # build and run the specs
 ```
 
 ## License
