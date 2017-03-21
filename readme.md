@@ -1,4 +1,4 @@
-# chai-webdriverio
+# chai-webdriverio ![https://travis-ci.org/marcodejongh/chai-webdriverio.svg?branch=master](https://travis-ci.org/marcodejongh/chai-webdriverio.svg?branch=master)
 
 Provides [webdriverio](https://npmjs.org/package/webdriverio) sugar for the [Chai](http://chaijs.com/) assertion library. Allows you to create expressive integration tests:
 
@@ -36,7 +36,7 @@ Setup is pretty easy. Just:
 
 ```javascript
 var chai = require('chai');
-var chaiWebdriver = require('chai-webdriverio');
+var chaiWebdriver = require('chai-webdriverio').default;
 chai.use(chaiWebdriver(browser));
 
 // And you're good to go!
@@ -49,9 +49,9 @@ chai.expect('#site-container h1.heading').to.not.contain.text("I'm a kitty!");
 so easy.
 
 ```bash
-npm install           # download the neccesary development dependencies
-npm run transpile     # compile ES6 into javascript
-npm test              # build and run the specs
+npm                  # download the neccesary development dependencies
+npm transpile        # compile ES6 into javascript
+npm test             # build and run the specs
 ```
 
 ## License
@@ -59,4 +59,4 @@ npm test              # build and run the specs
 Apache 2.0
 
 ## Thanks
-Thanks to [goodeggs](https://github.com/goodeggs/) for creating: [chai-webdriver](https://github.com/marcodejongh/chai-webdriverio) which inspired this module.
+Thanks to [goodeggs](https://github.com/goodeggs/) for creating: [chai-webdriver](https://github.com/goodeggs/chai-webdriver) which inspired this module.

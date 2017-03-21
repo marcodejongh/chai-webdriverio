@@ -3,6 +3,7 @@ import sinonChai from 'sinon-chai';
 import FakeClient from '../stubs/fake-client';
 import proxyquire from 'proxyquire';
 import sinon from 'sinon';
+import immediately from '../../src/chains/immediately';
 
 const fakeClient = new FakeClient();
 
@@ -16,6 +17,8 @@ const text = proxyquire('../../src/assertions/text', {
 
 //Using real chai, because it would be too much effort to stub/mock everything
 chai.use((chai, utils) => text(fakeClient, chai, utils));
+chai.use((chai, utils) => immediately(fakeClient, chai, utils));
+
 chai.use(sinonChai);
 
 describe('text', () => {
@@ -33,6 +36,28 @@ describe('text', () => {
         });
 
         describe('When element exists', () => {
+            describe('When call is chained with Immediately', () => {
+                let testResult;
+                beforeEach(() => {
+                    testResult = 'Never gonna give you up';
+                    elementExists.returns();
+                    fakeClient.getText.returns(testResult);
+                });
+
+                it('Should not wait till the element exists', () => {
+                    expect('.some-selector').to.have.immediately().text(testResult);
+                    expect(elementExists).to.not.have.been.called;
+                });
+                it('Should not throw an exception', () => {
+                    expect('.some-selector').to.have.immediately().text(testResult);
+                });
+                describe('When negated', () => {
+                    it('Should throw an error', () => {
+                        expect(() => expect('.some-selector').to.not.have.immediately().text(testResult)).to.throw();
+                    });
+                });
+            });
+
             describe('When element count matches expectation', () => {
                 let testResult;
                 beforeEach(() => {

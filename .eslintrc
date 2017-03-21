@@ -1,6 +1,7 @@
 {
     "parser": "babel-eslint",
     "extends": [
+        "eslint-config-airbnb/rules/es6",
         "@atlassian/atlassian-fecq"
     ],
     // our custom rules
@@ -8,6 +9,7 @@
         "space-before-function-paren": [2, { "anonymous": "never", "named": "never" }],
         "semi": [2, "always"],
         "no-warning-comments": [1, { "terms": ["todo", "fixme"], "location": "anywhere" }],
+        "space-after-keywords": [2, "always"],
         "react/jsx-indent-props": [2, 4],
         "react/jsx-no-bind": [2, {
             "ignoreRefs": false,

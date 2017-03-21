@@ -3,8 +3,11 @@ import elementExists from '../util/element-exists';
 export default function text(client, chai, utils) {
     chai.Assertion.addMethod('text', function(expected) {
         const selector =  utils.flag(this, 'object');
+        const immediately = utils.flag(this, 'immediately');
 
-        elementExists(client, selector);
+        if(!immediately) {
+            elementExists(client, selector);
+        }
 
         const elementText = client.getText(selector);
         const elementTextAsExpected = elementText === expected;
