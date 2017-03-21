@@ -24,34 +24,33 @@ describe('there', () => {
         elementExists.reset();
     });
 
-    describe('When in synchronous mode', () => {
-        it('Should throw element doesn\'t exist error', () => {
+    context("When element doesn't exist", () => {
+        it('Should throw an error', () => {
             elementExists.throws(new Error());
             expect(() => expect('.some-selector').to.be.there()).to.throw(/Expected .+ to be there/);
             expect(elementExists).to.have.been.calledOnce;
         });
 
-        describe('When negated', () => {
-            it('Should not throw element doesn\'t exist error', () => {
+        context('When negated', () => {
+            it('Should not throw an error', () => {
                 elementExists.throws(new Error());
                 expect(() => expect('.some-selector').to.not.be.there()).to.not.throw();
                 expect(elementExists).to.have.been.calledOnce;
             });
         });
+    });
 
-        describe('When element exists', () => {
-            beforeEach(() => {
-                elementExists.returns(true);
-            });
-            it('Should not throw an exception', () => {
-                console.log("EXIST:" + Object.keys(expect('.some-selector.').to.be.there));
-                expect('.some-selector').to.be.there();
-            });
+    context('When element exists', () => {
+        beforeEach(() => elementExists.returns(true));
 
-            describe('When negated', () => {
-                it('Should throw an exception', () => {
-                    expect(() => expect('.some-selector').to.not.be.there()).to.throw(/Expected .+ not to be there/);
-                });
+        it('Should not throw an exception', () => {
+            console.log("EXIST:" + Object.keys(expect('.some-selector.').to.be.there));
+            expect('.some-selector').to.be.there();
+        });
+
+        context('When negated', () => {
+            it('Should throw an exception', () => {
+                expect(() => expect('.some-selector').to.not.be.there()).to.throw(/Expected .+ not to be there/);
             });
         });
     });
