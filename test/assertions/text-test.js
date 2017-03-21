@@ -36,14 +36,13 @@ describe('text', () => {
         });
 
         describe('When element exists', () => {
-            describe('When call is chained with Immediately', () => {
-                let testResult;
-                beforeEach(() => {
-                    testResult = 'Never gonna give you up';
-                    elementExists.returns();
-                    fakeClient.getText.returns(testResult);
-                });
+            let testResult = 'Never gonna give you up';
+            beforeEach(() => {
+                elementExists.returns();
+                fakeClient.getText.returns(testResult);
+            });
 
+            describe('When call is chained with Immediately', () => {
                 it('Should not wait till the element exists', () => {
                     expect('.some-selector').to.have.immediately().text(testResult);
                     expect(elementExists).to.not.have.been.called;
@@ -58,20 +57,50 @@ describe('text', () => {
                 });
             });
 
-            describe('When element count matches expectation', () => {
-                let testResult;
-                beforeEach(() => {
-                    testResult = 'Never gonna give you up';
-                    elementExists.returns();
-                    fakeClient.getText.returns(testResult);
-                });
-
-                it('Should not throw an exception', () => {
+            describe('When element text matches string expectation', () => {
+                it('Should not throw an error', () => {
                     expect('.some-selector').to.have.text(testResult);
                 });
+
                 describe('When negated', () => {
                     it('Should throw an error', () => {
                         expect(() => expect('.some-selector').to.not.have.text(testResult)).to.throw();
+                    });
+                });
+            });
+
+            describe('When element text matches regex expectation', () => {
+                it('Should not throw an error', () => {
+                    expect('.some-selector').to.have.text(/gon+a give/);
+                });
+
+                describe('When negated', () => {
+                    it('Should throw an error', () => {
+                        expect(() => expect('.some-selector').to.not.have.text(/gon+a give/)).to.throw();
+                    });
+                });
+            });
+
+            describe('When element text does not match string expectation', () => {
+                it('Should throw an error', () => {
+                    expect(() => expect('.some-selector').to.have.text("dis don't match jack! 1#43@")).to.throw();
+                });
+
+                describe('When negated', () => {
+                    it('Should not throw an error', () => {
+                        expect('.some-selector').to.not.have.text("dis don't match jack! 1#43@");
+                    });
+                });
+            });
+
+            describe('When element text does not match regex expectation', () => {
+                it('Should throw an error', () => {
+                    expect(() => expect('.some-selector').to.have.text(/dis don't match jack! 1#43@/)).to.throw();
+                });
+
+                describe('When negated', () => {
+                    it('Should not throw an error', () => {
+                        expect('.some-selector').to.not.have.text(/dis don't match jack! 1#43@/);
                     });
                 });
             });

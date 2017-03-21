@@ -9,22 +9,20 @@ expect('.toggle-pane').to.not.be.visible()
 
 ## What sorts of assertions can we make?
 
-All assertions start with a css-selector, for example:
+All assertions start with a [WebdriverIO-compatible selector](http://webdriver.io/guide/usage/selectors.html), for example:
 
-- `expect('.list')`
-- `expect('div > h1')`
-- `expect('a[href=http://google.com]')`
+- `expect('.list')` (CSS selector)
+- `expect('a[href=http://google.com]')` (CSS Selector)
+- `expect('//BODY/DIV[6]/DIV[1]')` (XPath selector)
+- `expect('a*=Save')` (Text selector)
 
-Then we add the dom flag, like so:
+Then, we can add our assertion to the chain.
 
-- `expect(selector).dom`
-
-Finally, we can add our assertion to the chain.
-
-- `expect(selector).to.have.text('string')` - Test the text value of the dom against supplied string. Exact matches only.
-- `expect(selector).dom.to.have.text('regex')` - Test the text value of the dom against. Exact matches only.
-- `expect(selector).dom.to.be.visible()` - Check whether or not the element is visible.
-- `expect(selector).dom.to.have.count(number)` - Test how many elements exist in the dom with the supplied selector
+- `expect(selector).to.be.there()` - Test whether the element exists.
+- `expect(selector).to.be.visible()` - Test whether or not the element is visible.
+- `expect(selector).to.have.text('string')` - Test the text value of the dom element against supplied string. Exact matches only.
+- `expect(selector).to.have.text(/regex/)` - Test the text value of the dom element against the supplied regular expression.
+- `expect(selector).to.have.count(number)` - Test how many elements exist in the dom with the supplied selector
 
 You can also always add a `not` in there to negate the assertion:
 
@@ -49,10 +47,14 @@ chai.expect('#site-container h1.heading').to.not.contain.text("I'm a kitty!");
 so easy.
 
 ```bash
-npm                  # download the neccesary development dependencies
-npm transpile        # compile ES6 into javascript
-npm test             # build and run the specs
+npm                # download the necessary development dependencies
+npm transpile      # compile ES6 into javascript
+npm test           # build and run the specs
 ```
+
+**Contributors:**
+
+* [@mltsy](https://github.com/mltsy) : `exist`, `text` assertions, documentation & test adjustments
 
 ## License
 
