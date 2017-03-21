@@ -10,7 +10,13 @@ export default function text(client, chai, utils) {
         }
 
         const elementText = client.getText(selector);
-        const elementTextAsExpected = elementText === expected;
+
+        var elementTextAsExpected;
+        if (typeof(expected) == "string") {
+            elementTextAsExpected = elementText === expected;
+        } else {
+            elementTextAsExpected = elementText.match(expected);
+        }
 
         this.assert(
             elementTextAsExpected,
