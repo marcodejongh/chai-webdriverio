@@ -1,6 +1,6 @@
-# chai-webdriverio ![https://travis-ci.org/marcodejongh/chai-webdriverio.svg?branch=master](https://travis-ci.org/marcodejongh/chai-webdriverio.svg?branch=master)
+# chai-webdriverio ![Travis badge](https://travis-ci.org/marcodejongh/chai-webdriverio.svg?branch=master) [![Greenkeeper badge](https://badges.greenkeeper.io/marcodejongh/chai-webdriverio.svg)](https://greenkeeper.io/)
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/marcodejongh/chai-webdriverio.svg)](https://greenkeeper.io/)
+
 
 Provides [webdriverio](https://npmjs.org/package/webdriverio) sugar for the [Chai](http://chaijs.com/) assertion library. Allows you to create expressive integration tests:
 
