@@ -32,13 +32,13 @@ describe('visible', () => {
         it('Should throw element doesn\'t exist error', () => {
             const testError = 'foobar';
             elementExists.throws(new Error(testError));
-            expect(() => expect('.some-selector').to.be.visible()).to.throw(testError);
+            expect(() => expect('.some-selector').to.be.visible).to.throw(testError);
             expect(elementExists).to.have.been.calledOnce;
         });
 
         describe('When negated', () => {
             it('Should call element exists with reverse=true', () => {
-                expect('.some-selector').to.not.be.visible();
+                expect('.some-selector').to.not.be.visible;
                 expect(elementExists).to.have.been.calledWith(fakeClient, '.some-selector', true);
             });
         });
@@ -52,18 +52,18 @@ describe('visible', () => {
 
                 describe('When call is chained with Immediately', () => {
                     it('Should not wait for the element to exist', () => {
-                        expect('.some-selector').to.be.immediately().visible();
+                        expect('.some-selector').to.be.immediately.visible;
                         expect(elementExists).to.not.have.been.called;
                     });
                 });
 
                 it('Should not throw an exception', () => {
-                    expect('.some-selector').to.be.visible();
+                    expect('.some-selector').to.be.visible;
                 });
 
                 describe('When negated', () => {
                     it('Should throw an exception', () => {
-                        expect(() => expect('.some-selector').to.not.be.visible()).to.throw();
+                        expect(() => expect('.some-selector').to.not.be.visible).to.throw();
                     });
                 });
             });
