@@ -7,10 +7,10 @@ import immediately from './chains/immediately';
 
 export default function (client) {
     return function chaiWebdriverIO(chai, utils) {
-        there(client, chai, utils);
-        visible(client, chai, utils);
-        count(client, chai, utils);
-        text(client, chai, utils);
-        immediately(client, chai, utils);
+        let methodsToAdd = [there, visible, count, text, immediately];
+
+        methodsToAdd.forEach(function (methodToAdd) {
+            methodToAdd(client, chai, utils);
+        });
     };
 }
