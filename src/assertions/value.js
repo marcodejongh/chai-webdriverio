@@ -1,6 +1,6 @@
 import elementExists from '../util/element-exists';
 
-export default function text(client, chai, utils) {
+export default function value(client, chai, utils) {
     chai.Assertion.addMethod('value', function(expected) {
         const selector =  utils.flag(this, 'object');
         const immediately = utils.flag(this, 'immediately');
