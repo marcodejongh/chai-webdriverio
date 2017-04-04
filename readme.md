@@ -25,6 +25,8 @@ Then, we can add our assertion to the chain.
 - `expect(selector).to.have.text('string')` - Test the text value of the dom element against supplied string. Exact matches only.
 - `expect(selector).to.have.text(/regex/)` - Test the text value of the dom element against the supplied regular expression.
 - `expect(selector).to.have.count(number)` - Test how many elements exist in the dom with the supplied selector
+- `expect(selector).to.have.value('x')` - Test that the element in the dom with the supplied selector has the given value
+- `expect(selector).to.have.focus()` - Test that the elements in the dom with the supplied selector has focus
 
 You can also always add a `not` in there to negate the assertion:
 
