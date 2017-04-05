@@ -47,17 +47,17 @@ describe('count', () => {
                 });
 
                 it('Should not throw an exception', () => {
-                    expect('.some-selector').to.have.immediately().count(testResult.length);
+                    expect('.some-selector').to.immediately.have.count(testResult.length);
                 });
 
                 it('Should not wait till the element exists', () => {
-                    expect('.some-selector').to.have.immediately().count(testResult.length);
+                    expect('.some-selector').to.immediately.have.count(testResult.length);
                     expect(elementExists).to.not.have.been.called;
                 });
 
                 describe('When negated', () => {
                     it('Should throw an error', () => {
-                        expect(() => expect('.some-selector').to.not.have.immediately().count(testResult.length)).to.throw();
+                        expect(() => expect('.some-selector').to.not.immediately.have.count(testResult.length)).to.throw();
                     });
                 });
             });

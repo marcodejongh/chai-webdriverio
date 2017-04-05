@@ -1,7 +1,7 @@
 import elementExists from '../util/element-exists';
 
 export default function visible(client, chai, utils) {
-    chai.Assertion.addMethod('visible', function() {
+    chai.Assertion.addProperty('visible', function() {
         const selector =  utils.flag(this, 'object');
         const negate = utils.flag(this, 'negate');
         const immediately = utils.flag(this, 'immediately');

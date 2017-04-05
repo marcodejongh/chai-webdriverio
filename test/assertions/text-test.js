@@ -44,15 +44,15 @@ describe('text', () => {
 
             describe('When call is chained with Immediately', () => {
                 it('Should not wait till the element exists', () => {
-                    expect('.some-selector').to.have.immediately().text(testResult);
+                    expect('.some-selector').to.immediately.have.text(testResult);
                     expect(elementExists).to.not.have.been.called;
                 });
                 it('Should not throw an exception', () => {
-                    expect('.some-selector').to.have.immediately().text(testResult);
+                    expect('.some-selector').to.immediately.have.text(testResult);
                 });
                 describe('When negated', () => {
                     it('Should throw an error', () => {
-                        expect(() => expect('.some-selector').to.not.have.immediately().text(testResult)).to.throw();
+                        expect(() => expect('.some-selector').to.not.immediately.have.text(testResult)).to.throw();
                     });
                 });
             });
