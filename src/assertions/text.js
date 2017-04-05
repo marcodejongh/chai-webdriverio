@@ -10,12 +10,13 @@ export default function text(client, chai, utils) {
         }
 
         const elementText = client.getText(selector);
+        const textArray = (elementText instanceof Array) ? elementText : [elementText];
 
         var elementTextAsExpected;
-        if (typeof(expected) == "string") {
-            elementTextAsExpected = elementText === expected;
+        if (expected instanceof RegExp) {
+            elementTextAsExpected = textArray.some(text => text.match(expected));
         } else {
-            elementTextAsExpected = elementText.match(expected);
+            elementTextAsExpected = textArray.some(text => text === expected);
         }
 
         this.assert(
