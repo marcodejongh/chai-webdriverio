@@ -1,6 +1,7 @@
 import elementExists from '../util/element-exists';
 
-export default function there(client, chai, utils) {
+export default function there(config, chai, utils) {
+  var client = config.client
     chai.Assertion.addMethod('there', function() {
         const selector =  utils.flag(this, 'object');
         const negate = utils.flag(this, 'negate');
