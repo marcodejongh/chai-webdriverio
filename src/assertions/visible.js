@@ -10,10 +10,12 @@ export default function visible(client, chai, utils) {
             elementExists(client, selector, negate);
         }
 
-        const isVisible = client.$$(selector).isVisible().includes(true);
+        const isVisible = client.isVisible();
+        const visibleArray = (Array.isArray(isVisible)) ? isVisible : [isVisible];
+        const anyVisible = visibleArray.includes(true);
 
         this.assert(
-            isVisible,
+            anyVisible,
             `Expected ${selector} to be visible but it is not`,
             `Expected ${selector} to not be visible but it is`
         );

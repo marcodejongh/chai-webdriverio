@@ -23,7 +23,6 @@ chai.use(sinonChai);
 describe('visible', () => {
     beforeEach(() => {
         fakeClient.__resetStubs__();
-        fakeClient.$$.returns({isVisible: () => [false]});
         elementExists.reset();
         // Reset doesn't reset throws :(
         elementExists.returns();
@@ -48,7 +47,7 @@ describe('visible', () => {
             describe('When element is visible', () => {
                 beforeEach(() => {
                     elementExists.returns();
-                    fakeClient.$$.returns({isVisible: () => [true]});
+                    fakeClient.isVisible.returns(true);
                 });
 
                 describe('When call is chained with Immediately', () => {
@@ -72,7 +71,7 @@ describe('visible', () => {
             describe('When element is not visible', () => {
                 beforeEach(() => {
                     elementExists.returns();
-                    fakeClient.$$.returns({isVisible: () => [false]});
+                    fakeClient.isVisible.returns(false);
                 });
 
                 it('Should throw an exception', () => {
@@ -91,7 +90,7 @@ describe('visible', () => {
             describe('When any one is visible', () => {
                 beforeEach(() => {
                     elementExists.returns();
-                    fakeClient.$$.returns({isVisible: () => [true, false]});
+                    fakeClient.isVisible.returns([true, false]);
                 });
 
                 describe('When call is chained with Immediately', () => {
@@ -115,7 +114,7 @@ describe('visible', () => {
             describe('When none are visible', () => {
                 beforeEach(() => {
                     elementExists.returns();
-                    fakeClient.$$.returns({isVisible: () => [false, false]});
+                    fakeClient.isVisible.returns([false, false]);
                 });
 
                 it('Should throw an exception', () => {

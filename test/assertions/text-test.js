@@ -24,7 +24,6 @@ chai.use(sinonChai);
 describe('text', () => {
     beforeEach(() => {
         fakeClient.__resetStubs__();
-        fakeClient.$$.returns({getText: () => []});
         elementExists.reset();
     });
 
@@ -47,7 +46,7 @@ describe('text', () => {
             let elementText = 'Never gonna give you up';
             beforeEach(() => {
               elementExists.returns();
-              fakeClient.$$.returns({getText: () => [elementText]});
+              fakeClient.getText.returns(elementText);
             });
 
             describe('When call is chained with Immediately', () => {
@@ -118,7 +117,7 @@ describe('text', () => {
             let elementTexts = ['Never gonna give you up', 'Never gonna let you down'];
             beforeEach(() => {
                 elementExists.returns();
-                fakeClient.$$.returns({getText: () => elementTexts});
+                fakeClient.getText.returns(elementTexts);
             });
 
             describe("When at least one element's text matches string expectation", () => {

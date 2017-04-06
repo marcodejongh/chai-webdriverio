@@ -9,7 +9,8 @@ export default function text(client, chai, utils) {
             elementExists(client, selector);
         }
 
-        const textArray = client.$$(selector).getText();
+        const getText = client.getText(selector);
+        const textArray = (getText instanceof Array) ? getText : [getText];
 
         var elementTextAsExpected;
         if (expected instanceof RegExp) {
