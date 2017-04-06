@@ -23,6 +23,7 @@ chai.use(sinonChai);
 describe('visible', () => {
     beforeEach(() => {
         fakeClient.__resetStubs__();
+        fakeClient.$$.returns({isVisible: () => [false]});
         elementExists.reset();
         // Reset doesn't reset throws :(
         elementExists.returns();
@@ -47,7 +48,7 @@ describe('visible', () => {
             describe('When element is visible', () => {
                 beforeEach(() => {
                     elementExists.returns();
-                    fakeClient.isVisible.returns(true);
+                    fakeClient.$$.returns({isVisible: () => [true]});
                 });
 
                 describe('When call is chained with Immediately', () => {
@@ -64,6 +65,66 @@ describe('visible', () => {
                 describe('When negated', () => {
                     it('Should throw an exception', () => {
                         expect(() => expect('.some-selector').to.not.be.visible()).to.throw();
+                    });
+                });
+            });
+
+            describe('When element is not visible', () => {
+                beforeEach(() => {
+                    elementExists.returns();
+                    fakeClient.$$.returns({isVisible: () => [false]});
+                });
+
+                it('Should throw an exception', () => {
+                    expect(() => expect('.some-selector').to.be.visible()).to.throw();
+                });
+
+                describe('When negated', () => {
+                    it('Should not throw an exception', () => {
+                        expect('.some-selector').to.not.be.visible();
+                    });
+                });
+            });
+        });
+
+        describe('When multiple matching elements exists', () => {
+            describe('When any one is visible', () => {
+                beforeEach(() => {
+                    elementExists.returns();
+                    fakeClient.$$.returns({isVisible: () => [true, false]});
+                });
+
+                describe('When call is chained with Immediately', () => {
+                    it('Should not wait for the element to exist', () => {
+                        expect('.some-selector').to.be.immediately().visible();
+                        expect(elementExists).to.not.have.been.called;
+                    });
+                });
+
+                it('Should not throw an exception', () => {
+                    expect('.some-selector').to.be.visible();
+                });
+
+                describe('When negated', () => {
+                    it('Should throw an exception', () => {
+                        expect(() => expect('.some-selector').to.not.be.visible()).to.throw();
+                    });
+                });
+            });
+
+            describe('When none are visible', () => {
+                beforeEach(() => {
+                    elementExists.returns();
+                    fakeClient.$$.returns({isVisible: () => [false, false]});
+                });
+
+                it('Should throw an exception', () => {
+                    expect(() => expect('.some-selector').to.be.visible()).to.throw();
+                });
+
+                describe('When negated', () => {
+                    it('Should not throw an exception', () => {
+                        expect('.some-selector').to.not.be.visible();
                     });
                 });
             });

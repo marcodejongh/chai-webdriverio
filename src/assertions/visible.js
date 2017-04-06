@@ -10,7 +10,7 @@ export default function visible(client, chai, utils) {
             elementExists(client, selector, negate);
         }
 
-        const isVisible = client.isVisible(selector);
+        const isVisible = client.$$(selector).isVisible().includes(true);
 
         this.assert(
             isVisible,

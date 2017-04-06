@@ -9,8 +9,7 @@ export default function text(client, chai, utils) {
             elementExists(client, selector);
         }
 
-        const elementText = client.getText(selector);
-        const textArray = (elementText instanceof Array) ? elementText : [elementText];
+        const textArray = client.$$(selector).getText();
 
         var elementTextAsExpected;
         if (expected instanceof RegExp) {
@@ -21,8 +20,8 @@ export default function text(client, chai, utils) {
 
         this.assert(
             elementTextAsExpected,
-            `Expected element <${selector}> to contain text "${expected}", but it contains "${elementText}" instead.`,
-            `Expected element <${selector}> not to contain text "${expected}", but it contains "${elementText}".`
+            `Expected element <${selector}> to contain text "${expected}", but only found [${textArray}].`,
+            `Expected element <${selector}> not to contain text "${expected}", but only found [${textArray}].`
         );
     });
 }
