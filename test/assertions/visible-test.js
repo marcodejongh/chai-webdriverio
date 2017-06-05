@@ -39,7 +39,7 @@ describe('visible', () => {
         describe('When negated', () => {
             it('Should call element exists with reverse=true', () => {
                 expect('.some-selector').to.not.be.visible();
-                expect(elementExists).to.have.been.calledWith(fakeClient, '.some-selector', true);
+                expect(elementExists).to.have.been.calledWith(fakeClient, '.some-selector', 0, true);
             });
         });
 
@@ -48,6 +48,17 @@ describe('visible', () => {
                 beforeEach(() => {
                     elementExists.returns();
                     fakeClient.isVisible.returns(true);
+                });
+
+                context('When given a defaultWait time', () => {
+                  beforeEach(() => {
+                    chai.use((chai, utils) => visible(fakeClient, chai, utils, {defaultWait: 100}));
+                  });
+
+                  it('Should call element exists with specified wait time', () => {
+                      expect('.some-selector').to.be.visible();
+                      expect(elementExists).to.have.been.calledWith(fakeClient, '.some-selector', 100);
+                  });
                 });
 
                 describe('When call is chained with Immediately', () => {

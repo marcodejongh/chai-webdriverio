@@ -22,6 +22,8 @@ describe('there', () => {
     beforeEach(() => {
         fakeClient.__resetStubs__();
         elementExists.reset();
+        // Reset doesn't reset throws :(
+        elementExists.returns();
     });
 
     context("When element doesn't exist", () => {
@@ -33,9 +35,8 @@ describe('there', () => {
 
         context('When negated', () => {
             it('Should not throw an error', () => {
-                elementExists.throws(new Error());
                 expect(() => expect('.some-selector').to.not.be.there()).to.not.throw();
-                expect(elementExists).to.have.been.calledOnce;
+                expect(elementExists).to.have.been.calledWith(fakeClient, '.some-selector', 0, true);
             });
         });
     });
@@ -44,13 +45,14 @@ describe('there', () => {
         beforeEach(() => elementExists.returns(true));
 
         it('Should not throw an exception', () => {
-            console.log("EXIST:" + Object.keys(expect('.some-selector.').to.be.there));
             expect('.some-selector').to.be.there();
         });
 
         context('When negated', () => {
             it('Should throw an exception', () => {
+                elementExists.throws(new Error());
                 expect(() => expect('.some-selector').to.not.be.there()).to.throw(/Expected .+ not to be there/);
+                expect(elementExists).to.have.been.calledWith(fakeClient, '.some-selector', 0, true);
             });
         });
     });

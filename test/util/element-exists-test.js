@@ -15,12 +15,12 @@ describe('elementExists', () => {
     describe('When in synchronous mode', () => {
         it('Should throw element doesn\'t exist error', () => {
             fakeClient.waitForExist.throws();
-            expect(() => elementExists(fakeClient, 'bla')).to.throw(/Could not find element with selector/);
+            expect(() => elementExists(fakeClient, 'bla', 0)).to.throw(/Could not find element with selector/);
         });
         describe('When the element exist', () => {
             it('Should NOT throw an error', () => {
                 fakeClient.waitForExist.returns();
-                expect(() => elementExists(fakeClient, 'bla')).to.not.throw();
+                expect(() => elementExists(fakeClient, 'bla', 0)).to.not.throw();
             });
         });
 

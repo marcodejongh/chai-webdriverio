@@ -8,12 +8,11 @@ import focus from './assertions/focus';
 import immediately from './chains/immediately';
 
 export default function (client, options = {}) {
-    var config = Object.assign({}, options, {client: client});
     return function chaiWebdriverIO(chai, utils) {
         let methodsToAdd = [there, visible, count, text, immediately, value, focus];
 
         methodsToAdd.forEach(function (methodToAdd) {
-            methodToAdd(config, chai, utils);
+            methodToAdd(client, chai, utils, options);
         });
     };
 }

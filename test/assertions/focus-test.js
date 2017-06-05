@@ -30,13 +30,17 @@ describe('focus', () => {
 
     describe('When in synchronous mode', () => {
         describe("When element doesn't exist", () => {
+            beforeEach(() => {
+              elementExists.throws();
+            });
+
             it('Should throw an error', () => {
                 expect(() => expect('.some-selector').to.have.focus()).to.throw();
             });
 
             context('When negated', () => {
-                it('Should not throw an error', () => {
-                    expect('.some-selector').to.not.have.focus();
+                it('Should throw an error', () => {
+                    expect(() => expect('.some-selector').to.not.have.focus()).to.throw();
                 });
             });
         });
