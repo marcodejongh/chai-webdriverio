@@ -21,10 +21,10 @@ All assertions start with a [WebdriverIO-compatible selector](http://webdriver.i
 Then, we can add our assertion to the chain.
 
 - `expect(selector).to.be.there()` - Test whether the element exists.
-- `expect(selector).to.be.visible()` - Test whether or not the element is visible.
-- `expect(selector).to.have.text('string')` - Test the text value of the dom element against supplied string. Exact matches only.
-- `expect(selector).to.have.text(/regex/)` - Test the text value of the dom element against the supplied regular expression.
-- `expect(selector).to.have.count(number)` - Test how many elements exist in the dom with the supplied selector
+- `expect(selector).to.be.visible()` - Test whether or not at least one matching element is visible.
+- `expect(selector).to.have.text('string')` - Test the text value of the selected element(s) against supplied string. Succeeds if at least one element matches exactly.
+- `expect(selector).to.have.text(/regex/)` - Test the text value of the selected element(s) against the supplied regular expression. Succeeds if at least one element matches.
+- `expect(selector).to.have.count(number)` - Test how many elements exist in the dom with the supplied selector.
 
 You can also always add a `not` in there to negate the assertion:
 
