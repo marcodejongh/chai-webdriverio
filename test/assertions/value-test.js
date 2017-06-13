@@ -35,7 +35,7 @@ describe('value', () => {
             expect(elementExists).to.have.been.calledOnce;
         });
 
-        describe('When element exists', () => {
+        describe('When matching element exists', () => {
             let testResult = 'Never gonna give you up';
             beforeEach(() => {
                 elementExists.returns();
@@ -94,6 +94,62 @@ describe('value', () => {
             });
 
             describe('When element value does not match regex expectation', () => {
+                it('Should throw an error', () => {
+                    expect(() => expect('.some-selector').to.have.value(/dis don't match jack! 1#43@/)).to.throw();
+                });
+
+                describe('When negated', () => {
+                    it('Should not throw an error', () => {
+                        expect('.some-selector').to.not.have.value(/dis don't match jack! 1#43@/);
+                    });
+                });
+            });
+        });
+
+        describe('When multiple elements match', () => {
+            let testResult = ['Never gonna give you up', 'Never gonna let you down'];
+            beforeEach(() => {
+                elementExists.returns();
+                fakeClient.getValue.returns(testResult);
+            });
+
+            describe('When at least one element value matches string expectation', () => {
+                it('Should not throw an error', () => {
+                    expect('.some-selector').to.have.value(testResult[0]);
+                });
+
+                describe('When negated', () => {
+                    it('Should throw an error', () => {
+                        expect(() => expect('.some-selector').to.not.have.value(testResult[0])).to.throw();
+                    });
+                });
+            });
+
+            describe('When at least one element value matches regex expectation', () => {
+                it('Should not throw an error', () => {
+                    expect('.some-selector').to.have.value(/gon+a give/);
+                });
+
+                describe('When negated', () => {
+                    it('Should throw an error', () => {
+                        expect(() => expect('.some-selector').to.not.have.value(/gon+a give/)).to.throw();
+                    });
+                });
+            });
+
+            describe('When no element value matches string expectation', () => {
+                it('Should throw an error', () => {
+                    expect(() => expect('.some-selector').to.have.value("dis don't match jack! 1#43@")).to.throw();
+                });
+
+                describe('When negated', () => {
+                    it('Should not throw an error', () => {
+                        expect('.some-selector').to.not.have.value("dis don't match jack! 1#43@");
+                    });
+                });
+            });
+
+            describe('When no element value matches regex expectation', () => {
                 it('Should throw an error', () => {
                     expect(() => expect('.some-selector').to.have.value(/dis don't match jack! 1#43@/)).to.throw();
                 });

@@ -21,8 +21,8 @@ export default function text(client, chai, utils) {
 
         this.assert(
             elementTextAsExpected,
-            `Expected element <${selector}> to contain text "${expected}", but only found [${textArray}].`,
-            `Expected element <${selector}> not to contain text "${expected}", but only found [${textArray}].`
+            `Expected element <${selector}> to contain text "${expected}", but only found: ${textArray}`,
+            `Expected element <${selector}> not to contain text "${expected}", but found: ${textArray}`
         );
     });
 }

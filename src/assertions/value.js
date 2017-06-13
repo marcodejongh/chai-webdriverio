@@ -10,18 +10,19 @@ export default function value(client, chai, utils) {
         }
 
         const elementValue = client.getValue(selector);
+        const valueArray = (elementValue instanceof Array) ? elementValue : [elementValue];
 
         var elementValueAsExpected;
         if (typeof(expected) == "string") {
-            elementValueAsExpected = elementValue === expected;
+            elementValueAsExpected = valueArray.some(value => value === expected);
         } else {
-            elementValueAsExpected = elementValue.match(expected);
+            elementValueAsExpected = valueArray.some(value => value.match(expected));
         }
 
         this.assert(
             elementValueAsExpected,
-            `Expected element <${selector}> to contain value "${expected}", but it contains "${elementValue}" instead.`,
-            `Expected element <${selector}> not to contain value "${expected}", but it contains "${elementValue}".`
+            `Expected an element matching <${selector}> to contain value "${expected}", but only found these values: ${valueArray}`,
+            `Expected an element matching <${selector}> not to contain value "${expected}", but found these values: ${valueArray}`
         );
     });
 }
