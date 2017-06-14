@@ -46,6 +46,26 @@ browser.url('http://github.com');
 chai.expect('#site-container h1.heading').to.not.contain.text("I'm a kitty!");
 ```
 
+## Default Wait Time
+
+As an optional argument to the initializer, you can add an `options` object in this format:
+
+```javascript
+var options = {defaultWait: 500} // 500ms
+chai.use(chaiWebdriver(browser, options));
+```
+
+The `defaultWait` parameter will cause chai-webdriverio to wait the specified number of milliseconds
+for a given selector to appear before failing (if it is not yet present on the page).  You can use `immediately`
+to skip this default wait time:
+
+```javascript
+expect(selector).to.immediately.have.text('string'); // fails immediately if element is not found
+```
+
+**Beware:** For `immediately` to work, your [implicit wait time in WebdriverIO](http://webdriver.io/guide/testrunner/timeouts.html#Session-Implicit-Wait-Timeout)
+must be set to 0.  The immediately flag has no way to skip WebdriverIO's implicit wait.
+
 ## Contributing
 
 so easy.

@@ -1,15 +1,19 @@
 import elementExists from '../util/element-exists';
+import configWithDefaults from '../util/default-config';
 
-export default function there(client, chai, utils) {
+export default function there(client, chai, utils, options) {
+    const config = configWithDefaults(options);
     chai.Assertion.addMethod('there', function() {
         const selector =  utils.flag(this, 'object');
         const negate = utils.flag(this, 'negate');
+        const immediately = utils.flag(this, 'immediately');
 
-        var isThere = true
+        var isThere = !negate;
+        const defaultWait = immediately ? 0 : config.defaultWait;
         try {
-            elementExists(client, selector);
+            elementExists(client, selector, defaultWait, negate);
         } catch (error) {
-            isThere = false
+            isThere = negate;
         }
 
         this.assert(

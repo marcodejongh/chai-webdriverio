@@ -7,12 +7,12 @@ import value from './assertions/value';
 import focus from './assertions/focus';
 import immediately from './chains/immediately';
 
-export default function (client) {
+export default function (client, options = {}) {
     return function chaiWebdriverIO(chai, utils) {
         let methodsToAdd = [there, visible, count, text, immediately, value, focus];
 
         methodsToAdd.forEach(function (methodToAdd) {
-            methodToAdd(client, chai, utils);
+            methodToAdd(client, chai, utils, options);
         });
     };
 }

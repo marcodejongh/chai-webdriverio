@@ -1,7 +1,11 @@
-export default function assertElementExists(client, selector, reverse) {
+export default function assertElementExists(client, selector, defaultWait=0, reverse) {
     try {
-        client.waitForExist(selector, reverse);
+        client.waitForExist(selector, defaultWait, reverse);
     } catch (error) {
-        throw new Error(`Could not find element with selector ${selector}`);
+        if (reverse) {
+          throw new Error(`Element with selector ${selector} still exists after ${defaultWait}ms (while waiting for it not to).`);
+        } else {
+          throw new Error(`Could not find element with selector ${selector} within ${defaultWait}ms`);
+        }
     }
 }
