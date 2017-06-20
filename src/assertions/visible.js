@@ -12,7 +12,7 @@ export default function visible(client, chai, utils, options) {
           elementExists(client, selector, config.defaultWait, negate);
         }
 
-        const isVisible = client.isVisible();
+        const isVisible = client.isVisible(selector);
         const visibleArray = (Array.isArray(isVisible)) ? isVisible : [isVisible];
         const anyVisible = visibleArray.includes(true);
 
