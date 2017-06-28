@@ -26,9 +26,12 @@ describe('visible', () => {
         elementExists.reset();
         // Reset doesn't reset throws :(
         elementExists.returns();
+        fakeClient.isVisible.throws("ArgumentError");
+        fakeClient.isVisible.withArgs('.some-selector').returns(false);
     });
 
     describe('When in synchronous mode', () => {
+
         it('Should throw element doesn\'t exist error', () => {
             const testError = 'foobar';
             elementExists.throws(new Error(testError));
@@ -44,10 +47,11 @@ describe('visible', () => {
         });
 
         describe('When element exists', () => {
+            beforeEach(() => { elementExists.returns(); });
+
             describe('When element is visible', () => {
                 beforeEach(() => {
-                    elementExists.returns();
-                    fakeClient.isVisible.returns(true);
+                    fakeClient.isVisible.withArgs('.some-selector').returns(true);
                 });
 
                 context('When given a defaultWait time', () => {
@@ -80,11 +84,6 @@ describe('visible', () => {
             });
 
             describe('When element is not visible', () => {
-                beforeEach(() => {
-                    elementExists.returns();
-                    fakeClient.isVisible.returns(false);
-                });
-
                 it('Should throw an exception', () => {
                     expect(() => expect('.some-selector').to.be.visible()).to.throw();
                 });
@@ -101,7 +100,7 @@ describe('visible', () => {
             describe('When any one is visible', () => {
                 beforeEach(() => {
                     elementExists.returns();
-                    fakeClient.isVisible.returns([true, false]);
+                    fakeClient.isVisible.withArgs('.some-selector').returns([true, false]);
                 });
 
                 describe('When call is chained with Immediately', () => {
@@ -125,7 +124,7 @@ describe('visible', () => {
             describe('When none are visible', () => {
                 beforeEach(() => {
                     elementExists.returns();
-                    fakeClient.isVisible.returns([false, false]);
+                    fakeClient.isVisible.withArgs('.some-selector').returns([false, false]);
                 });
 
                 it('Should throw an exception', () => {

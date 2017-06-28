@@ -1,6 +1,11 @@
 # Change Log
 
-## Unreleased Changes:
+## 0.4.1:
+
+**Bug Fixes:**
+- fix error in `visible` assertion introduced in `0.4.0`
+
+## 0.4.0:
 
 **Breaking Changes:**
 - elementExists not requires 4 arguments instead of 3, to account for defaultWait time.
