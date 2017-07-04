@@ -40,9 +40,9 @@ describe('visible', () => {
         });
 
         describe('When negated', () => {
-            it('Should call element exists with reverse=true', () => {
+            it('Should call element exists with reverse=false', () => {
                 expect('.some-selector').to.not.be.visible();
-                expect(elementExists).to.have.been.calledWith(fakeClient, '.some-selector', 0, true);
+                expect(elementExists).to.have.been.calledWith(fakeClient, '.some-selector', 0, false);
             });
         });
 

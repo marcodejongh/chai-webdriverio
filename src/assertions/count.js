@@ -5,11 +5,10 @@ export default function count(client, chai, utils, options) {
     const config = configWithDefaults(options);
     chai.Assertion.addMethod('count', function(expected) {
         const selector =  utils.flag(this, 'object');
-        const negate = utils.flag(this, 'negate');
         const immediately = utils.flag(this, 'immediately');
 
         if(!immediately) {
-            elementExists(client, selector, config.defaultWait, negate);
+            elementExists(client, selector, config.defaultWait, false);
         }
 
         const elements = client.elements(selector).value;

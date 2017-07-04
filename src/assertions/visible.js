@@ -5,11 +5,10 @@ export default function visible(client, chai, utils, options) {
     const config = configWithDefaults(options);
     chai.Assertion.addMethod('visible', function() {
         const selector =  utils.flag(this, 'object');
-        const negate = utils.flag(this, 'negate');
         const immediately = utils.flag(this, 'immediately');
 
         if (!immediately) {
-          elementExists(client, selector, config.defaultWait, negate);
+          elementExists(client, selector, config.defaultWait, false);
         }
 
         const isVisible = client.isVisible(selector);

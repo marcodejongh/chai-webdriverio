@@ -35,6 +35,15 @@ describe('count', () => {
             expect(elementExists).to.have.been.calledOnce;
         });
 
+        describe('When negated', () => {
+            beforeEach(() => fakeClient.elements.returns({value: []}));
+
+            it('Should call element exists with reverse=false', () => {
+                expect('.some-selector').to.not.have.count(123);
+                expect(elementExists).to.have.been.calledWith(fakeClient, '.some-selector', 0, false);
+            });
+        });
+
         describe('When element exists', () => {
             describe('When call is chained with Immediately', () => {
                 let testResult;
