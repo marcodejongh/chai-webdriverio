@@ -1,120 +1,157 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
 import FakeClient from '../stubs/fake-client';
-import proxyquire from 'proxyquire';
 import sinon from 'sinon';
+import visible from '../../src/assertions/visible';
 import immediately from '../../src/chains/immediately';
 
-const fakeClient = new FakeClient();
-
-const elementExists = sinon.stub();
-
-const visible = proxyquire('../../src/assertions/visible', {
-    '../util/element-exists': {
-        'default': elementExists
-    }
-}).default;
-
 //Using real chai, because it would be too much effort to stub/mock everything
-chai.use((chai, utils) => visible(fakeClient, chai, utils));
-chai.use((chai, utils) => immediately(fakeClient, chai, utils));
 chai.use(sinonChai);
 
 describe('visible', () => {
+    let fakeClient;
+
     beforeEach(() => {
-        fakeClient.__resetStubs__();
-        elementExists.reset();
-        // Reset doesn't reset throws :(
-        elementExists.returns();
-        fakeClient.isVisible.throws("ArgumentError");
+        fakeClient = new FakeClient();
+
+        fakeClient.isVisible.throws('ArgumentError');
         fakeClient.isVisible.withArgs('.some-selector').returns(false);
+
+        chai.use((chai, utils) => visible(fakeClient, chai, utils));
+        chai.use((chai, utils) => immediately(fakeClient, chai, utils));
     });
 
-    describe('When in synchronous mode', () => {
+    afterEach(() => fakeClient.__resetStubs__());
 
-        it('Should throw element doesn\'t exist error', () => {
-            const testError = 'foobar';
-            elementExists.throws(new Error(testError));
-            expect(() => expect('.some-selector').to.be.visible()).to.throw(testError);
-            expect(elementExists).to.have.been.calledOnce;
+    describe('When in synchronous mode', () => {
+        describe('When not negated', () => {
+            beforeEach(() => {
+                fakeClient.isVisible.withArgs('.some-selector').returns(true);
+
+                expect('.some-selector').to.be.visible();
+            });
+
+            it('Should call `waitForVisible` without `reverse`', () => {
+                expect(fakeClient.waitForVisible)
+                    .to.have.been.calledWith('.some-selector', 0, undefined);
+            });
+
+            describe('When the element is still not visible after the wait time', () => {
+                let testError;
+
+                beforeEach(() => {
+                    testError = 'Element still not visible';
+
+                    fakeClient.waitForVisible.throws(new Error(testError));
+                });
+
+                it('Should throw an exception', () => {
+                    expect(() => expect('.some-selector').to.be.visible())
+                        .to.throw(testError);
+                });
+            });
         });
 
         describe('When negated', () => {
-            it('Should call element exists with reverse=true', () => {
-                expect('.some-selector').to.not.be.visible();
-                expect(elementExists).to.have.been.calledWith(fakeClient, '.some-selector', 0, true);
+            beforeEach(() => expect('.some-selector').to.not.be.visible());
+
+            it('Should call `waitForVisible` with `reverse` true', () => {
+                expect(fakeClient.waitForVisible)
+                    .to.have.been.calledWith('.some-selector', 0, true);
             });
-        });
 
-        describe('When element exists', () => {
-            beforeEach(() => { elementExists.returns(); });
+            describe('When the element is still visible after the wait time', () => {
+                let testError;
 
-            describe('When element is visible', () => {
                 beforeEach(() => {
-                    fakeClient.isVisible.withArgs('.some-selector').returns(true);
+                    testError = 'Element still visible';
+
+                    fakeClient.waitForVisible.throws(new Error(testError));
                 });
 
-                context('When given a defaultWait time', () => {
-                  beforeEach(() => {
-                    chai.use((chai, utils) => visible(fakeClient, chai, utils, {defaultWait: 100}));
-                  });
-
-                  it('Should call element exists with specified wait time', () => {
-                      expect('.some-selector').to.be.visible();
-                      expect(elementExists).to.have.been.calledWith(fakeClient, '.some-selector', 100);
-                  });
-                });
-
-                describe('When call is chained with Immediately', () => {
-                    it('Should not wait for the element to exist', () => {
-                        expect('.some-selector').to.be.immediately().visible();
-                        expect(elementExists).to.not.have.been.called;
-                    });
-                });
-
-                it('Should not throw an exception', () => {
-                    expect('.some-selector').to.be.visible();
-                });
-
-                describe('When negated', () => {
-                    it('Should throw an exception', () => {
-                        expect(() => expect('.some-selector').to.not.be.visible()).to.throw();
-                    });
-                });
-            });
-
-            describe('When element is not visible', () => {
                 it('Should throw an exception', () => {
-                    expect(() => expect('.some-selector').to.be.visible()).to.throw();
-                });
-
-                describe('When negated', () => {
-                    it('Should not throw an exception', () => {
-                        expect('.some-selector').to.not.be.visible();
-                    });
+                    expect(() => expect('.some-selector').to.not.be.visible())
+                        .to.throw(testError);
                 });
             });
         });
 
-        describe('When multiple matching elements exists', () => {
+        describe('When the element is visible', () => {
+            beforeEach(() => {
+                fakeClient.isVisible.withArgs('.some-selector').returns(true);
+            });
+
+            it('Should not throw an exception', () => {
+                expect('.some-selector').to.be.visible();
+            });
+
+            describe('When given a default wait time' , () => {
+                beforeEach(() => {
+                  chai.use((chai, utils) => visible(fakeClient, chai, utils, {defaultWait: 100}));
+
+                  expect('.some-selector').to.be.visible();
+                });
+
+                it('Should call `waitForVisible` with the specified wait time', () => {
+                    expect(fakeClient.waitForVisible)
+                        .to.have.been.calledWith('.some-selector', 100);
+                });
+            });
+
+            describe('When the call is chained with `immediately`', () => {
+                beforeEach(() => {
+                    expect('.some-selector').to.be.immediately().visible();
+                });
+
+                it('Should not wait for the element to be visible', () => {
+                    expect(fakeClient.waitForVisible).to.not.have.been.called;
+                });
+            });
+
+            describe('When the assertion is negated', () => {
+                it('Should throw an exception', () => {
+                    expect(() => expect('.some-selector').to.not.be.visible()).to.throw();
+                });
+            });
+        });
+
+        describe('When the element is not visible', () => {
+            beforeEach(() => {
+                fakeClient.isVisible.withArgs('.some-selector').returns(false);
+            });
+
+            it('Should throw an exception', () => {
+                expect(() => expect('.some-selector').to.be.visible()).to.throw();
+            });
+
+            describe('When the assertion is negated', () => {
+                it('Should not throw an exception', () => {
+                    expect('.some-selector').to.not.be.visible();
+                });
+            });
+        });
+
+        describe('When multiple matching elements exist', () => {
             describe('When any one is visible', () => {
                 beforeEach(() => {
-                    elementExists.returns();
                     fakeClient.isVisible.withArgs('.some-selector').returns([true, false]);
                 });
 
-                describe('When call is chained with Immediately', () => {
-                    it('Should not wait for the element to exist', () => {
-                        expect('.some-selector').to.be.immediately().visible();
-                        expect(elementExists).to.not.have.been.called;
-                    });
-                });
-
                 it('Should not throw an exception', () => {
                     expect('.some-selector').to.be.visible();
                 });
 
-                describe('When negated', () => {
+                describe('When the call is chained with `immediately`', () => {
+                    beforeEach(() => {
+                        expect('.some-selector').to.be.immediately().visible();
+                    });
+
+                    it('Should not wait for the element to be visible', () => {
+                        expect(fakeClient.waitForVisible).to.not.have.been.called;
+                    });
+                });
+
+                describe('When the assertion is negated', () => {
                     it('Should throw an exception', () => {
                         expect(() => expect('.some-selector').to.not.be.visible()).to.throw();
                     });
@@ -123,7 +160,6 @@ describe('visible', () => {
 
             describe('When none are visible', () => {
                 beforeEach(() => {
-                    elementExists.returns();
                     fakeClient.isVisible.withArgs('.some-selector').returns([false, false]);
                 });
 
@@ -131,7 +167,7 @@ describe('visible', () => {
                     expect(() => expect('.some-selector').to.be.visible()).to.throw();
                 });
 
-                describe('When negated', () => {
+                describe('When the assertion is negated', () => {
                     it('Should not throw an exception', () => {
                         expect('.some-selector').to.not.be.visible();
                     });

@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.4.2:
+
+**Bug Fixes:**
+- Use `waitForVisible` instead of `waitForExist` in `visible`
+- Use `waitUntil` instead of `waitForExist` in `count`
+
 ## 0.4.1:
 
 **Bug Fixes:**
