@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.3:
+**Added feature:**
+- added `enabled` assertion
+
 ## 0.4.2:
 
 **Bug Fixes:**

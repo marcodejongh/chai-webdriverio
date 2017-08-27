@@ -32,23 +32,7 @@ describe('enabled', () => {
             });
 
             it('Should call `waitForEnabled` without `reverse`', () => {
-                expect(fakeClient.waitForEnabled)
-                    .to.have.been.calledWith('.some-selector', 0, undefined);
-            });
-
-            describe('When the element is still not enabled after the wait time', () => {
-                let testError;
-
-                beforeEach(() => {
-                    testError = 'Element still not enabled';
-
-                    fakeClient.waitForEnabled.throws(new Error(testError));
-                });
-
-                it('Should throw an exception', () => {
-                    expect(() => expect('.some-selector').to.be.enabled())
-                        .to.throw(testError);
-                });
+                expect(fakeClient.waitForEnabled).to.have.been.calledWith('.some-selector', 0);
             });
         });
 
@@ -56,23 +40,7 @@ describe('enabled', () => {
             beforeEach(() => expect('.some-selector').to.not.be.enabled());
 
             it('Should call `waitForEnabled` with `reverse` true', () => {
-                expect(fakeClient.waitForEnabled)
-                    .to.have.been.calledWith('.some-selector', 0, true);
-            });
-
-            describe('When the element is still enabled after the wait time', () => {
-                let testError;
-
-                beforeEach(() => {
-                    testError = 'Element still enabled';
-
-                    fakeClient.waitForEnabled.throws(new Error(testError));
-                });
-
-                it('Should throw an exception', () => {
-                    expect(() => expect('.some-selector').to.not.be.enabled())
-                        .to.throw(testError);
-                });
+                expect(fakeClient.waitForEnabled).to.have.been.calledWith('.some-selector', 0, true);
             });
         });
 
