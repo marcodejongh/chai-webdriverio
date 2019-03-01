@@ -1,6 +1,6 @@
 {
   "name": "chai-webdriverio",
-  "version": "5.0.0",
+  "version": "1.0.0",
   "description": "Chai assertions for use with webdriverio",
   "license": "Apache-2.0",
   "repository": "marcodejongh/chai-webdriverio",

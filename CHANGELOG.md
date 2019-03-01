@@ -1,6 +1,6 @@
 # Change Log
 
-## 5.0.0:
+## 1.0.0:
 **Breaking changes** 
 - `.visible()` is renamed to `.displayed()` to be in line with new WebdriverIO wording
 
