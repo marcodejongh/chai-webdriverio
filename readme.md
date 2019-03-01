@@ -66,6 +66,18 @@ expect(selector).to.immediately.have.text('string'); // fails immediately if ele
 **Beware:** For `immediately` to work, your [implicit wait time in WebdriverIO](http://webdriver.io/guide/testrunner/timeouts.html#Session-Implicit-Wait-Timeout)
 must be set to 0.  The immediately flag has no way to skip WebdriverIO's implicit wait.
 
+## Compatability
+
+### WebdriverIO
+| WebdriverIO version | Compatible `chai-webdriverio` version |
+| ---- | ---- |
+| 5.x.x | >= 1.0.0
+| 4.x.x | 0.4.3
+
+### Node.js
+
+`chai-webdriverio` version >= 1.0.0 requires Node.js 8.x
+
 ## Contributing
 
 so easy.

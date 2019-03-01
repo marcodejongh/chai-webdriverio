@@ -15,7 +15,7 @@
     "Joe Marty (https://github.com/mltsy)"
   ],
   "engines": {
-    "node": ">=4"
+    "node": ">= 8.11.0"
   },
   "scripts": {
     "prepublish": "npm run transpile",
