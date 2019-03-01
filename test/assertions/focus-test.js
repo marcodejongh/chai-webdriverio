@@ -1,19 +1,12 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
 import FakeClient from '../stubs/fake-client';
-import proxyquire from 'proxyquire';
-import sinon from 'sinon';
+import FakeElement from '../stubs/fake-element';
 import immediately from '../../src/chains/immediately';
+import focus from '../../src/assertions/focus';
 
 const fakeClient = new FakeClient();
-
-const elementExists = sinon.stub();
-
-const focus = proxyquire('../../src/assertions/focus', {
-    '../util/element-exists': {
-        'default': elementExists
-    }
-}).default;
+const fakeElement = new FakeElement();
 
 //Using real chai, because it would be too much effort to stub/mock everything
 chai.use((chai, utils) => focus(fakeClient, chai, utils));
@@ -23,17 +16,11 @@ chai.use(sinonChai);
 describe('focus', () => {
     beforeEach(() => {
         fakeClient.__resetStubs__();
-        elementExists.reset();
-        // Reset doesn't reset throws :(
-        elementExists.returns();
+        fakeElement.__resetStubs__();
     });
 
     describe('When in synchronous mode', () => {
         describe("When element doesn't exist", () => {
-            beforeEach(() => {
-              elementExists.throws();
-            });
-
             it('Should throw an error', () => {
                 expect(() => expect('.some-selector').to.have.focus()).to.throw();
             });
@@ -48,8 +35,8 @@ describe('focus', () => {
         describe('When element exists', () => {
             describe('When element is focused', () => {
                 beforeEach(() => {
-                    elementExists.returns();
-                    fakeClient.hasFocus.returns(true);
+                    fakeClient.$$.returns([fakeElement])
+                    fakeElement.isFocused.returns(true);
                 });
 
                 it('Should not throw an exception', () => {
