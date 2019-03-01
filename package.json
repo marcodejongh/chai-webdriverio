@@ -5,6 +5,7 @@
   "license": "Apache-2.0",
   "repository": "marcodejongh/chai-webdriverio",
   "main": "dist/index.js",
+  "typings": "index.d.ts",
   "author": {
     "name": "Marco De Jongh",
     "email": "mdejongh@atlassian.com",
