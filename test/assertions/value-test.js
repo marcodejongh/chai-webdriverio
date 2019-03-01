@@ -1,19 +1,13 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
 import FakeClient from '../stubs/fake-client';
-import proxyquire from 'proxyquire';
-import sinon from 'sinon';
+import FakeElement from '../stubs/fake-element';
 import immediately from '../../src/chains/immediately';
+import value from '../../src/assertions/value';
 
 const fakeClient = new FakeClient();
-
-const elementExists = sinon.stub();
-
-const value = proxyquire('../../src/assertions/value', {
-    '../util/element-exists': {
-        'default': elementExists
-    }
-}).default;
+const fakeElement1 = new FakeElement();
+const fakeElement2 = new FakeElement();
 
 //Using real chai, because it would be too much effort to stub/mock everything
 chai.use((chai, utils) => value(fakeClient, chai, utils));
@@ -24,28 +18,28 @@ chai.use(sinonChai);
 describe('value', () => {
     beforeEach(() => {
         fakeClient.__resetStubs__();
-        elementExists.reset();
+        fakeElement1.__resetStubs__();
+        fakeElement2.__resetStubs__();
+
+        fakeClient.$$.returns([fakeElement1]);
     });
 
     describe('When in synchronous mode', () => {
         it('Should throw element doesn\'t exist error', () => {
             const testError = 'foobar';
-            elementExists.throws(new Error(testError));
-            expect(() => expect('.some-selector').to.have.value('blablabla')).to.throw(testError);
-            expect(elementExists).to.have.been.calledOnce;
+            expect(() => expect('.some-selector').to.have.value('blablabla')).to.throw();
         });
 
         describe('When matching element exists', () => {
             let testResult = 'Never gonna give you up';
             beforeEach(() => {
-                elementExists.returns();
-                fakeClient.getValue.returns(testResult);
+                fakeElement1.getValue.returns(testResult);
             });
 
             describe('When call is chained with Immediately', () => {
                 it('Should not wait till the element exists', () => {
                     expect('.some-selector').to.have.immediately().value(testResult);
-                    expect(elementExists).to.not.have.been.called;
+                    expect(fakeClient.waitUntil).to.not.have.been.called;
                 });
                 it('Should not throw an exception', () => {
                     expect('.some-selector').to.have.immediately().value(testResult);
@@ -109,8 +103,9 @@ describe('value', () => {
         describe('When multiple elements match', () => {
             let testResult = ['Never gonna give you up', 'Never gonna let you down'];
             beforeEach(() => {
-                elementExists.returns();
-                fakeClient.getValue.returns(testResult);
+                fakeElement1.getValue.returns(testResult[0])
+                fakeElement2.getValue.returns(testResult[1])
+                fakeClient.$$.returns([fakeElement1, fakeElement2]);
             });
 
             describe('When at least one element value matches string expectation', () => {
