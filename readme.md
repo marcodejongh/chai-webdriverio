@@ -6,7 +6,7 @@ Provides [webdriverio](https://npmjs.org/package/webdriverio) sugar for the [Cha
 
 ```javascript
 expect('.frequency-field').to.have.text('One time')
-expect('.toggle-pane').to.not.be.visible()
+expect('.toggle-pane').to.not.be.displayed()
 ```
 
 ## What sorts of assertions can we make?
@@ -21,7 +21,7 @@ All assertions start with a [WebdriverIO-compatible selector](http://webdriver.i
 Then, we can add our assertion to the chain.
 
 - `expect(selector).to.be.there()` - Test whether [at least one] matching element exists in the DOM
-- `expect(selector).to.be.visible()` - Test whether or not [at least one] matching element is visible
+- `expect(selector).to.be.displayed()` - Test whether or not [at least one] matching element is displayed
 - `expect(selector).to.have.text('string')` - Test the text value of the selected element(s) against supplied string. Succeeds if at least one element matches exactly
 - `expect(selector).to.have.text(/regex/)` - Test the text value of the selected element(s) against the supplied regular expression. Succeeds if at least one element matches
 - `expect(selector).to.have.count(number)` - Test how many elements exist in the DOM with the supplied selector
