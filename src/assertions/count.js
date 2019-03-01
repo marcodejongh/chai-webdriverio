@@ -1,8 +1,7 @@
-import elementExists from '../util/element-exists';
 import configWithDefaults from '../util/default-config';
 
 function hasCount(client, selector, count, countStore) {
-    const elements = client.elements(selector).value;
+    const elements = client.$$(selector);
 
     countStore.count = elements.length;
 
@@ -20,7 +19,7 @@ function waitUntilCount(client, selector, count, defaultWait=0, reverse) {
             );
         } catch (error) {
             throw new Error(
-                `Element with selector ${selector} does not appear in the DOM ${count} times ` +
+                `Element with selector <${selector}> does not appear in the DOM ${count} times ` +
                     `within ${defaultWait} ms, but it shows up ${countStore.count} times instead.`
             );
         }
@@ -28,7 +27,7 @@ function waitUntilCount(client, selector, count, defaultWait=0, reverse) {
         client.waitUntil(
             () => !hasCount(client, selector, count, countStore),
             defaultWait,
-            `Element with selector ${selector} still appears in the DOM ${count} times after ${defaultWait} ms`
+            `Element with selector <${selector}> still appears in the DOM ${count} times after ${defaultWait} ms`
         );
     }
 }
@@ -48,8 +47,8 @@ export default function count(client, chai, utils, options) {
 
         this.assert(
             hasCount(client, selector, expected, countStore),
-            `Expected ${selector} to appear in the DOM ${expected} times, but it shows up ${countStore.count} times instead.`,
-            `Expected ${selector} not to appear in the DOM ${expected} times, but it does.`
+            `Expected <${selector}> to appear in the DOM ${expected} times, but it shows up ${countStore.count} times instead.`,
+            `Expected <${selector}> not to appear in the DOM ${expected} times, but it does.`
         );
     });
 }
