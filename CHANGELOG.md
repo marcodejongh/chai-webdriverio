@@ -6,6 +6,7 @@
 
 **Added feature**
 - Compatability with WebdriverIO v5
+- TypeScript types are now shipped directly with the `chai-webdriverio` package
 
 **Bug Fixes:**
 - `.focus()`, `.text()`, `.value()` exssertions do now wait until [at least one] selected element matches the assertion, not only until [at least one] element with the given selector exists.
