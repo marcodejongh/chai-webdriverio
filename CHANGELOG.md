@@ -3,6 +3,7 @@
 ## 1.0.0:
 **Breaking changes** 
 - `.visible()` is renamed to `.displayed()` to be in line with new WebdriverIO wording
+- Requires NodeJS 8 or newer
 
 **Added feature**
 - Compatability with WebdriverIO v5
