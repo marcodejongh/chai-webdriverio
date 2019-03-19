@@ -1,7 +1,7 @@
 import chai, { expect } from 'chai';
 import sinonChai from 'sinon-chai';
 import FakeClient from '../stubs/fake-client';
-import sinon from 'sinon';
+import FakeElement from '../stubs/fake-element';
 import count from '../../src/assertions/count';
 import immediately from '../../src/chains/immediately';
 
@@ -9,13 +9,13 @@ import immediately from '../../src/chains/immediately';
 chai.use(sinonChai);
 
 const doesNotHaveCountError = (count, actualCount, defaultWait=0) => {
-    return 'Element with selector .some-selector does not ' +
+    return 'Element with selector <.some-selector> does not ' +
         `appear in the DOM ${count} times within ${defaultWait} ms, ` +
         `but it shows up ${actualCount} times instead.`;
 };
 
 const hasCountError = (count, defaultWait=0) => {
-    return 'Element with selector .some-selector still ' +
+    return 'Element with selector <.some-selector> still ' +
         `appears in the DOM ${count} times after ${defaultWait} ms`;
 };
 
@@ -24,11 +24,11 @@ describe('count', () => {
     let fakeClient;
 
     beforeEach(() => {
-        elements = ['foo', 'bar'];
+        elements = [new FakeElement(), new FakeElement()];
         fakeClient = new FakeClient();
 
-        fakeClient.elements.throws('ArgumentError');
-        fakeClient.elements.withArgs('.some-selector').returns({value: elements});
+        fakeClient.$$.throws('ArgumentError');
+        fakeClient.$$.withArgs('.some-selector').returns(elements);
 
         fakeClient.waitUntil.callsFake((condition, timeout, timeoutMsg) => {
             if (condition()) return;

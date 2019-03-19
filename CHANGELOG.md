@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.0.0:
+**Breaking changes** 
+- `.visible()` is renamed to `.displayed()` to be in line with new WebdriverIO wording
+- Requires NodeJS 8 or newer
+
+**Added feature**
+- Compatability with WebdriverIO v5
+- TypeScript types are now shipped directly with the `chai-webdriverio` package
+
+**Bug Fixes:**
+- `.focus()`, `.text()`, `.value()` exssertions do now wait until [at least one] selected element matches the assertion, not only until [at least one] element with the given selector exists.
+
 ## 0.4.3:
 **Added feature:**
 - added `enabled` assertion

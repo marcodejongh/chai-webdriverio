@@ -1,10 +1,11 @@
 {
   "name": "chai-webdriverio",
-  "version": "0.4.2",
+  "version": "1.0.0",
   "description": "Chai assertions for use with webdriverio",
   "license": "Apache-2.0",
   "repository": "marcodejongh/chai-webdriverio",
   "main": "dist/index.js",
+  "typings": "index.d.ts",
   "author": {
     "name": "Marco De Jongh",
     "email": "mdejongh@atlassian.com",
@@ -14,7 +15,7 @@
     "Joe Marty (https://github.com/mltsy)"
   ],
   "engines": {
-    "node": ">=4"
+    "node": ">= 8.11.0"
   },
   "scripts": {
     "prepublish": "npm run transpile",
@@ -42,7 +43,7 @@
     "proxyquire": "^1.7.11",
     "sinon": "^3.0.0",
     "sinon-chai": "^2.9.0",
-    "webdriverio": "^4.6.2"
+    "webdriverio": "^5.0.0"
   },
   "peerDependencies": {
     "chai": "~4.0.1"

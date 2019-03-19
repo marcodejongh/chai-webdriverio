@@ -1,5 +1,21 @@
-import elementExists from '../util/element-exists';
 import configWithDefaults from '../util/default-config';
+
+const doesOneElementHaveValue = function(client, selector, expected) {
+    let elements = client.$$(selector);
+    let values = []
+    let filteredList = elements.filter((element) => {
+        let value = element.getValue();
+        values.push(value);
+        var elementHasExpectedValue = (expected instanceof RegExp) ? value.match(expected) : value === expected;
+
+        return elementHasExpectedValue;
+    });
+
+    return {
+        result: filteredList.length > 0,
+        values: values
+    };
+}
 
 export default function value(client, chai, utils, options) {
     const config = configWithDefaults(options);
@@ -8,23 +24,20 @@ export default function value(client, chai, utils, options) {
         const immediately = utils.flag(this, 'immediately');
 
         if(!immediately) {
-            elementExists(client, selector, config.defaultWait);
+            try {
+                client.waitUntil(() => {
+                    return doesOneElementHaveValue(client, selector, expected).result;
+                }, config.defaultWait)
+            } catch(e) {
+                // actual assertion is handled below
+            }
         }
 
-        const elementValue = client.getValue(selector);
-        const valueArray = (elementValue instanceof Array) ? elementValue : [elementValue];
-
-        var elementValueAsExpected;
-        if (typeof(expected) == "string") {
-            elementValueAsExpected = valueArray.some(value => value === expected);
-        } else {
-            elementValueAsExpected = valueArray.some(value => value.match(expected));
-        }
-
+        let elementContainsValue = doesOneElementHaveValue(client, selector, expected);
         this.assert(
-            elementValueAsExpected,
-            `Expected an element matching <${selector}> to contain value "${expected}", but only found these values: ${valueArray}`,
-            `Expected an element matching <${selector}> not to contain value "${expected}", but found these values: ${valueArray}`
+            elementContainsValue.result,
+            `Expected an element matching <${selector}> to contain value "${expected}", but only found these values: ${elementContainsValue.values}`,
+            `Expected an element matching <${selector}> not to contain value "${expected}", but found these values: ${elementContainsValue.values}`
         );
     });
 }

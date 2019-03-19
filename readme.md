@@ -6,7 +6,7 @@ Provides [webdriverio](https://npmjs.org/package/webdriverio) sugar for the [Cha
 
 ```javascript
 expect('.frequency-field').to.have.text('One time')
-expect('.toggle-pane').to.not.be.visible()
+expect('.toggle-pane').to.not.be.displayed()
 ```
 
 ## What sorts of assertions can we make?
@@ -21,7 +21,7 @@ All assertions start with a [WebdriverIO-compatible selector](http://webdriver.i
 Then, we can add our assertion to the chain.
 
 - `expect(selector).to.be.there()` - Test whether [at least one] matching element exists in the DOM
-- `expect(selector).to.be.visible()` - Test whether or not [at least one] matching element is visible
+- `expect(selector).to.be.displayed()` - Test whether or not [at least one] matching element is displayed
 - `expect(selector).to.have.text('string')` - Test the text value of the selected element(s) against supplied string. Succeeds if at least one element matches exactly
 - `expect(selector).to.have.text(/regex/)` - Test the text value of the selected element(s) against the supplied regular expression. Succeeds if at least one element matches
 - `expect(selector).to.have.count(number)` - Test how many elements exist in the DOM with the supplied selector
@@ -65,6 +65,18 @@ expect(selector).to.immediately.have.text('string'); // fails immediately if ele
 
 **Beware:** For `immediately` to work, your [implicit wait time in WebdriverIO](http://webdriver.io/guide/testrunner/timeouts.html#Session-Implicit-Wait-Timeout)
 must be set to 0.  The immediately flag has no way to skip WebdriverIO's implicit wait.
+
+## Compatability
+
+### WebdriverIO
+| WebdriverIO version | Compatible `chai-webdriverio` version |
+| ---- | ---- |
+| 5.x.x | >= 1.0.0
+| 4.x.x | 0.4.3
+
+### Node.js
+
+`chai-webdriverio` version >= 1.0.0 requires Node.js 8.x
 
 ## Contributing
 
