@@ -1,4 +1,4 @@
-/// <reference types="webdriverio" />
+/// <reference types="webdriver" />
 /// <reference types="chai" />
 
 declare namespace Chai {
@@ -15,6 +15,10 @@ declare namespace Chai {
 }
 
 declare module 'chai-webdriverio' {
-    function chaiWebdriverIO(client: WebdriverIO.Client<void>, options?: any): (chai: any, utils: any) => void;
+    interface Options {
+        defaultWait?: number
+    }
+
+    function chaiWebdriverIO(client: WebDriver.Client | WebDriver.ClientAsync, options?: Options): (chai: any, utils: any) => void;
     export = chaiWebdriverIO;
 }
