@@ -46,6 +46,6 @@
     "webdriverio": "^5.0.0"
   },
   "peerDependencies": {
-    "chai": "~4.0.1"
+    "chai": "^4.0.1"
   }
 }
