@@ -22,11 +22,13 @@ Then, we can add our assertion to the chain.
 
 - `expect(selector).to.be.there()` - Test whether [at least one] matching element exists in the DOM
 - `expect(selector).to.be.displayed()` - Test whether or not [at least one] matching element is displayed
+- `expect(selector).to.be.enabled()` - Test that [at least one] selected element is enabled
 - `expect(selector).to.have.text('string')` - Test the text value of the selected element(s) against supplied string. Succeeds if at least one element matches exactly
 - `expect(selector).to.have.text(/regex/)` - Test the text value of the selected element(s) against the supplied regular expression. Succeeds if at least one element matches
 - `expect(selector).to.have.count(number)` - Test how many elements exist in the DOM with the supplied selector
 - `expect(selector).to.have.value('x')` - Test that [at least one] selected element has the given value
 - `expect(selector).to.have.focus()` - Test that [at least one] selected element has focus
+- `expect(selector).to.have.attribute('key', 'value')` - Test that [at least one] selected element has an attribute key=value
 
 You can also always add a `not` in there to negate the assertion:
 
