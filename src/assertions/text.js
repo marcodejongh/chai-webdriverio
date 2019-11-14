@@ -22,14 +22,15 @@ export default function text(client, chai, utils, options) {
 
     chai.Assertion.addMethod('text', function(expected) {
         const selector =  utils.flag(this, 'object');
+        const negate =  utils.flag(this, 'negate');
         const immediately = utils.flag(this, 'immediately');
 
         if(!immediately) {
             try {
                 client.waitUntil(() => {
-                    return doesOneElementContainText(client, selector, expected).result;
+                    return doesOneElementContainText(client, selector, expected).result === !negate;
                 }, config.defaultWait)
-            } catch(e) { 
+            } catch(e) {
                 // actual assertion is handled below
             }
         }

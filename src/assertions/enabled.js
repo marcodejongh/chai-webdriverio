@@ -5,7 +5,7 @@ const isOneElementEnabled = function(client, selector) {
      let filteredList = elements.filter((element) => {
           return element.isEnabled();
      });
-     
+
      return filteredList.length > 0;
 }
 
@@ -22,8 +22,8 @@ export default function enabled(client, chai, utils, options) {
 
           if (!immediately) {
                client.waitUntil(() => {
-                    return isOneElementEnabled(client, selector) == !negate
-               }, config.defaultWait, (negate) ? errorMsgNegate : errorMsg);
+                    return isOneElementEnabled(client, selector) === !negate
+               }, config.defaultWait, negate ? errorMsgNegate : errorMsg);
           }
 
           this.assert(

@@ -21,12 +21,13 @@ export default function attribute(client, chai, utils, options) {
     const config = configWithDefaults(options);
     chai.Assertion.addMethod('attribute', function(attribute, expected) {
         const selector =  utils.flag(this, 'object');
+        const negate = utils.flag(this, 'negate');
         const immediately = utils.flag(this, 'immediately');
 
         if(!immediately) {
             try {
                 client.waitUntil(() => {
-                    return doesOneElementHaveAttribute(client, selector, attribute, expected).result;
+                    return doesOneElementHaveAttribute(client, selector, attribute, expected).result === !negate;
                 }, config.defaultWait)
             } catch(e) {
                 // actual assertion is handled below

@@ -22,8 +22,8 @@ export default function displayed(client, chai, utils, options) {
 
         if (!immediately) {
             client.waitUntil(() => {
-                return isOneElementDisplayed(client, selector) == !negate;
-            }, config.defaultWait, (negate) ? errorMsgNegate : errorMsg);
+                return isOneElementDisplayed(client, selector) === !negate;
+            }, config.defaultWait, negate ? errorMsgNegate : errorMsg);
         }
 
         this.assert(

@@ -21,12 +21,13 @@ export default function value(client, chai, utils, options) {
     const config = configWithDefaults(options);
     chai.Assertion.addMethod('value', function(expected) {
         const selector =  utils.flag(this, 'object');
+        const negate =  utils.flag(this, 'negate');
         const immediately = utils.flag(this, 'immediately');
 
         if(!immediately) {
             try {
                 client.waitUntil(() => {
-                    return doesOneElementHaveValue(client, selector, expected).result;
+                    return doesOneElementHaveValue(client, selector, expected).result === !negate;
                 }, config.defaultWait)
             } catch(e) {
                 // actual assertion is handled below
